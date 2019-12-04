@@ -93,7 +93,6 @@ namespace NUnitTestGeneratorLibrary
                     .WithModifiers(
                         TokenList(
                             Token(SyntaxKind.PublicKeyword)))
-                    .WithParameterList(method.ParameterList)
                     .WithBody(
                         Block(
                             SingletonList<StatementSyntax>(
@@ -137,7 +136,6 @@ namespace NUnitTestGeneratorLibrary
             {
                 return null;
             }
-
         }
 
         public List<SyntaxNode> Generate(string source)
