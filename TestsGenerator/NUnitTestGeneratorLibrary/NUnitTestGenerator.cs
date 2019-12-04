@@ -114,18 +114,26 @@ namespace NUnitTestGeneratorLibrary
 
         public SyntaxNode GenerateCompilationUnitFromSourceCode(string sourceCode)
         {
-            CompilationUnitSyntax sourceRoot = CSharpSyntaxTree.ParseText(sourceCode).GetCompilationUnitRoot();
-            if (sourceRoot == null)
+            try
             {
-                throw new NullReferenceException("Parsing of source code wasn't done!");
+                CompilationUnitSyntax sourceRoot = CSharpSyntaxTree.ParseText(sourceCode).GetCompilationUnitRoot();
+                if (sourceRoot.Members.Count == 0)
+                {
+                    return null;
+                }
+
+                ClassDeclarationSyntax classDeclaration = sourceRoot.DescendantNodes().OfType<ClassDeclarationSyntax>().FirstOrDefault();
+
+                SyntaxNode result = GenerateCompilationUnit(classDeclaration);
+                result = GenerateClassNode(result, classDeclaration);
+                result = GenerateTestMethods(result, sourceRoot.DescendantNodes().OfType<MethodDeclarationSyntax>());
+                return result.NormalizeWhitespace();
+            }
+            catch(Exception e)
+            {
+                return null;
             }
 
-            ClassDeclarationSyntax classDeclaration = sourceRoot.DescendantNodes().OfType<ClassDeclarationSyntax>().FirstOrDefault();
-
-            SyntaxNode result = GenerateCompilationUnit(classDeclaration);
-            result = GenerateClassNode(result, classDeclaration);
-            result = GenerateTestMethods(result, sourceRoot.DescendantNodes().OfType<MethodDeclarationSyntax>());
-            return result.NormalizeWhitespace();
         }
 
         public SyntaxNode Generate(string source)
