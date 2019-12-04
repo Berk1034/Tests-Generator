@@ -55,7 +55,7 @@ namespace NUnitTestGeneratorLibraryUnitTests
                                     "    {\r\n" +
                                     "    }\r\n" +
                                     "}";
-            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode).ToString());
+            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode)[0].ToString());
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace NUnitTestGeneratorLibraryUnitTests
                                     "        }\r\n" +
                                     "    }\r\n" +
                                     "}";
-            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode).ToString());
+            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode)[0].ToString());
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace NUnitTestGeneratorLibraryUnitTests
                                     "        }\r\n" +
                                     "    }\r\n" +
                                     "}";
-            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode).ToString());
+            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode)[0].ToString());
         }
 
         [TestMethod]
@@ -145,7 +145,7 @@ namespace NUnitTestGeneratorLibraryUnitTests
                                     "        }\r\n" +
                                     "    }\r\n" +
                                     "}";
-            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode).ToString());
+            Assert.AreEqual(sourceCodeTest, nUnitTestGenerator.Generate(sourceCode)[0].ToString());
         }
     }
 }
