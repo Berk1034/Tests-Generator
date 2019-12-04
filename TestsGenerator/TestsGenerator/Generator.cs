@@ -52,10 +52,14 @@ namespace TestsGenerator
                     if(words[i] == "class")
                     {
                         i++;
-                    testName = words[i].Trim(' ', '\r','\n','\t');
+                        testName = words[i].Trim(' ', '\r','\n','\t');
                     }
                 }
                 return new CSharpFile(Path.GetFullPath(_testfolder) + "\\" + testName + "Test.cs", generatedTest);
+
+            }, new ExecutionDataflowBlockOptions
+            {
+                MaxDegreeOfParallelism = _maxThreads
             });
 
 
