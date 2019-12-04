@@ -2,7 +2,13 @@ namespace B
 {
     public class b
     {
-        public void getB();
-        public void CheckIt();
+        public void getB()
+        {
+
+        }
+        public void CheckIt()
+        {
+
+        }
     }
 }

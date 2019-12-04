@@ -67,19 +67,33 @@ namespace NUnitTestGeneratorLibrary
 
         private SyntaxNode GenerateTestMethods(SyntaxNode root, IEnumerable<MethodDeclarationSyntax> methods)
         {
+            Dictionary<string, int> OverridedMethods = new Dictionary<string, int>();
             ClassDeclarationSyntax oldClassDeclaration = root.DescendantNodes().OfType<ClassDeclarationSyntax>().FirstOrDefault();
             ClassDeclarationSyntax newClassDeclaration = oldClassDeclaration;
             foreach (MethodDeclarationSyntax method in methods)
             {
-                newClassDeclaration = newClassDeclaration.AddMembers(GenerateTestMethod(method));
+                string substr = "";
+                if(methods.Any(Method => (method != Method) && (method.Identifier.ValueText == Method.Identifier.ValueText)))
+                {
+                    if (OverridedMethods.ContainsKey(method.Identifier.ValueText))
+                    {
+                        OverridedMethods[method.Identifier.ValueText] += 1;
+                    }
+                    else
+                    {
+                        OverridedMethods[method.Identifier.ValueText] = 1;
+                    }
+                    substr = OverridedMethods[method.Identifier.ValueText].ToString();
+                }
+                newClassDeclaration = newClassDeclaration.AddMembers(GenerateTestMethod(method, substr));
             }
 
             return root.ReplaceNode(oldClassDeclaration, newClassDeclaration);
         }
 
-        private MemberDeclarationSyntax GenerateTestMethod(MethodDeclarationSyntax method)
+        private MemberDeclarationSyntax GenerateTestMethod(MethodDeclarationSyntax method, string overridenmethodnumber)
         {
-            string methodIdentifier = method.Identifier.Text + "MethodTest";
+            string methodIdentifier = method.Identifier.Text +overridenmethodnumber + "MethodTest";
             return MethodDeclaration(
                         PredefinedType(
                             method.ReturnType.GetFirstToken()),
