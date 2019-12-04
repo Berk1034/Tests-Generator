@@ -5,6 +5,16 @@
         public void Teach()
         {
             
-        }    
+        }
+
+        private void K()
+        {
+
+        }
+
+        public void Z()
+        {
+
+        }
     }
 }

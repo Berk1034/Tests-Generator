@@ -13,7 +13,6 @@ namespace NUnitTestGeneratorLibrary
 {
     public class NUnitTestGenerator
     {
-
         private SyntaxNode GenerateCompilationUnit(ClassDeclarationSyntax classDeclaration)
         {
             if (!(classDeclaration.Parent is NamespaceDeclarationSyntax))
@@ -126,7 +125,7 @@ namespace NUnitTestGeneratorLibrary
 
                 SyntaxNode result = GenerateCompilationUnit(classDeclaration);
                 result = GenerateClassNode(result, classDeclaration);
-                result = GenerateTestMethods(result, sourceRoot.DescendantNodes().OfType<MethodDeclarationSyntax>());
+                result = GenerateTestMethods(result, sourceRoot.DescendantNodes().OfType<MethodDeclarationSyntax>().Where(method => method.Modifiers.Any(modifier => modifier.ToString() == "public")));
                 return result.NormalizeWhitespace();
             }
             catch(Exception e)
